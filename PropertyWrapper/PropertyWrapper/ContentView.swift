@@ -8,17 +8,50 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isShowingSettings: Bool = false
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            VStack(spacing: 20) {
+                Button(action: {
+                    isShowingSettings = true
+                }) {
+                    Image(systemName: "slider.horizontal.3")
+                } // Button
+                .sheet(isPresented: $isShowingSettings) {
+                    SettingsView()
+                }
+            }
+            .padding()
+            
         }
-        .padding()
     }
 }
+struct SettingsView : View {
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 20) {
+            }
+            .navigationBarTitle(Text("Settings"), displayMode: .large)
+            .navigationBarItems(
+                trailing:
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "xmark")
+                    }
+            )
+            .padding()
+            
+        }
+    }
+}
+
 
 #Preview {
     ContentView()
 }
+
+
